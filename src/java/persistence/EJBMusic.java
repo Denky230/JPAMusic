@@ -7,7 +7,6 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceUnit;
-import javax.persistence.Query;
 
 /**
  *
@@ -21,7 +20,8 @@ public class EJBMusic {
 
     public void validateLogin(String username, String password) {
         User user = getUserbyUsername(username);
-        if (user != null && !password.equals(user.getPassword())) {
+        System.out.println("got user by username");
+        if (user == null || !password.equals(user.getPassword())) {
             throw new RuntimeException("Login muy mal");
         }
     }

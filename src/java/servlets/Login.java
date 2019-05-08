@@ -40,17 +40,19 @@ public class Login extends HttpServlet {
         try {
             // Validate credentials
             ejb.validateLogin(username, password);
+            System.out.println("past validate");
 
             // Login User
             User user = ejb.getUserbyUsername(username);
             request.getSession(true).setAttribute("user", user);
             User u = (User) request.getSession().getAttribute("user");
-            System.out.println(u.getUsername());
+            System.out.println("past login");
 
         } catch (RuntimeException e) {
+            System.out.println("Runtime caught");
             // Add error to response + send to feedback.jsp for display
-            response.setHeader("status", e.getMessage());
-            response.sendRedirect(request.getContextPath() + "/feedback.jsp");
+            request.setAttribute("status", e.getMessage());
+            request.getRequestDispatcher("/feedback.jsp").forward(request, response);
         }
     }
 

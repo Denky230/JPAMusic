@@ -15,7 +15,7 @@
 
     <body>
         <%= (String) request.getAttribute("status") %>
-
         <form action="index.html"><input type="submit" value="Home"></form>
     </body>
+
 </html>
