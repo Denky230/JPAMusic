@@ -6,6 +6,7 @@
 package servlets;
 
 import entities.User;
+import exceptions.DatabaseException;
 import java.io.IOException;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -40,20 +41,18 @@ public class Login extends HttpServlet {
         try {
             // Validate credentials
             ejb.validateLogin(username, password);
-            System.out.println("past validate");
 
             // Login User
             User user = ejb.getUserbyUsername(username);
             request.getSession(true).setAttribute("user", user);
-            User u = (User) request.getSession().getAttribute("user");
-            System.out.println("past login");
 
-        } catch (RuntimeException e) {
-            System.out.println("Runtime caught");
-            // Add error to response + send to feedback.jsp for display
+        } catch (DatabaseException e) {
+            // Add error + send to feedback.jsp for display
             request.setAttribute("status", e.getMessage());
             request.getRequestDispatcher("/feedback.jsp").forward(request, response);
         }
+        
+        request.getRequestDispatcher("/home.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

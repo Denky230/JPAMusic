@@ -14,8 +14,13 @@
     </head>
 
     <body>
-        <%= (String) request.getAttribute("status") %>
-        <form action="index.html"><input type="submit" value="Home"></form>
+        <!-- Main -->
+        <div style="width:20%; padding-top: 20px; padding-left: 30px">
+            
+            <p><%= (String) request.getAttribute("status") %></p>
+            <form action="home.jsp"><button type="submit" class="btn btn-primary">Home</button></form>
+            
+        </div>
     </body>
 
 </html>

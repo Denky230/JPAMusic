@@ -36,7 +36,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Sheetmusic.findByInstrument", query = "SELECT s FROM Sheetmusic s WHERE s.instrument = :instrument")
     , @NamedQuery(name = "Sheetmusic.findByGenre", query = "SELECT s FROM Sheetmusic s WHERE s.genre = :genre")
     , @NamedQuery(name = "Sheetmusic.findByDifficulty", query = "SELECT s FROM Sheetmusic s WHERE s.difficulty = :difficulty")
-    , @NamedQuery(name = "Sheetmusic.findByPrinted", query = "SELECT s FROM Sheetmusic s WHERE s.printed = :printed")})
+    , @NamedQuery(name = "Sheetmusic.findByPrinted", query = "SELECT s FROM Sheetmusic s WHERE s.printed = :printed")
+    , @NamedQuery(name = "Sheetmusic.findByOwner", query = "SELECT s FROM Sheetmusic s WHERE s.owner = :owner")})
 public class Sheetmusic implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -91,6 +92,16 @@ public class Sheetmusic implements Serializable {
         this.genre = genre;
         this.difficulty = difficulty;
         this.printed = printed;
+    }
+    public Sheetmusic(Integer idsheetmusic, String title, String artist, String instrument, String genre, String difficulty, boolean printed, User owner) {
+        this.idsheetmusic = idsheetmusic;
+        this.title = title;
+        this.artist = artist;
+        this.instrument = instrument;
+        this.genre = genre;
+        this.difficulty = difficulty;
+        this.printed = printed;
+        this.owner = owner;
     }
 
     public Integer getIdsheetmusic() {

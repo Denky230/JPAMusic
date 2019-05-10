@@ -5,9 +5,12 @@
  */
 package servlets;
 
+import constants.Instrument;
+import entities.Sheetmusic;
 import entities.User;
-import exceptions.DatabaseException;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -17,11 +20,11 @@ import persistence.EJBMusic;
 
 /**
  *
- * @author alu2017310
+ * @author User
  */
-public class NewUser extends HttpServlet {
+public class ListSheetsByFavouriteInstrument extends HttpServlet {
 
-     @EJB EJBMusic ejb;
+    @EJB EJBMusic ejb;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -33,26 +36,15 @@ public class NewUser extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        // Get User data from register form
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        String favInstrument = request.getParameter("instrument");
-        User u = new User(username, password, favInstrument);
         
-        try {
-            // Register new User
-            ejb.insertUser(u);
-
-        } catch (DatabaseException e) {
-            // Add error + send to feedback.jsp for display
-            request.setAttribute("status", e.getMessage());
-            request.getRequestDispatcher("/feedback.jsp").forward(request, response);
-        }
+        // Select Sheets by favourite instrument from database
+        User u = (User) request.getSession().getAttribute("user");
+        Instrument i = Instrument.valueOf(u.getFavourite());
+        List<Sheetmusic> sheets = ejb.selectSheetsByInstrument(i);
         
-        // Give User feedback
-        request.setAttribute("status", "User "+u.getUsername()+" registered successfully! :)");
-        request.getRequestDispatcher("/feedback.jsp").forward(request, response);
+        // Add Sheets + send to listSheets.jsp for display
+        request.setAttribute("sheets", sheets);
+        request.getRequestDispatcher("/listSheets.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

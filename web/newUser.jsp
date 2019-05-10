@@ -24,16 +24,24 @@
 
             <!-- User register form -->
             <form action="NewUser" method="POST">
-                <input type="text" name="username" placeholder="Username">
-                <p><input type="text" name="password" placeholder="Password"></p>
-                <p><select>
-                    <%
-                        for (Instrument i : Instrument.values()) {
-                            %><option value="<%= i.name() %>"><%= i.name() %></option><%
-                        }
-                    %>
-                </select></p>
-                <p><input type="submit" value="Register" name="newUser"></p>
+
+                <div class="form-group">
+                    <input type="text" class="form-control" name="username" placeholder="Username">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" name="password" placeholder="Password">
+                </div>
+                <div class="form-group">
+                    <select name="instrument">
+                        <%
+                            for (Instrument i : Instrument.values()) {
+                                %><option value="<%= i.name() %>"><%= i.name() %></option><%
+                            }
+                        %>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Register</button>
+
             </form>
 
         </div>

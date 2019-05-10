@@ -5,23 +5,18 @@
  */
 package servlets;
 
-import entities.User;
-import exceptions.DatabaseException;
 import java.io.IOException;
-import javax.ejb.EJB;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import persistence.EJBMusic;
 
 /**
  *
- * @author alu2017310
+ * @author User
  */
-public class NewUser extends HttpServlet {
-
-     @EJB EJBMusic ejb;
+public class Logout extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -33,26 +28,12 @@ public class NewUser extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        // Get User data from register form
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        String favInstrument = request.getParameter("instrument");
-        User u = new User(username, password, favInstrument);
         
-        try {
-            // Register new User
-            ejb.insertUser(u);
-
-        } catch (DatabaseException e) {
-            // Add error + send to feedback.jsp for display
-            request.setAttribute("status", e.getMessage());
-            request.getRequestDispatcher("/feedback.jsp").forward(request, response);
-        }
+        // Log User out of session
+        request.getSession().setAttribute("user", null);
         
-        // Give User feedback
-        request.setAttribute("status", "User "+u.getUsername()+" registered successfully! :)");
-        request.getRequestDispatcher("/feedback.jsp").forward(request, response);
+        // Send to login screen
+        request.getRequestDispatcher("/index.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

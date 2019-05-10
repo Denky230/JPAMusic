@@ -5,7 +5,7 @@
  */
 package servlets;
 
-import constants.*;
+import entities.Sheetmusic;
 import entities.User;
 import java.io.IOException;
 import javax.ejb.EJB;
@@ -34,13 +34,21 @@ public class NewSheet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        // Get Sheet data from register form
         String title = request.getParameter("title");
         String artist = request.getParameter("artist");
-        Instrument instrument = Instrument.valueOf(request.getParameter("instrument"));
-        Genres genre = Genres.valueOf(request.getParameter("genre"));
-        Difficulty difficulty = Difficulty.valueOf(request.getParameter("difficulty"));
-        boolean printed = false;
-        User user = (User) request.getSession().getAttribute("user");
+        String instrument = request.getParameter("instrument");
+        String genre = request.getParameter("genre");
+        String difficulty = request.getParameter("difficulty");
+        User u = (User) request.getSession().getAttribute("user");
+        Sheetmusic s = new Sheetmusic(null, title, artist, instrument, genre, difficulty, false, u);
+        
+        // Register new Sheet
+        ejb.insertSheet(s);
+        
+        // Give User feedback
+        request.setAttribute("status", "Sheet registered successfully! :)");
+        request.getRequestDispatcher("/feedback.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

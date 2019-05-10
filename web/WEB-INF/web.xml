@@ -12,6 +12,22 @@
         <servlet-name>Login</servlet-name>
         <servlet-class>servlets.Login</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ListAllSheets</servlet-name>
+        <servlet-class>servlets.ListAllSheets</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Logout</servlet-name>
+        <servlet-class>servlets.Logout</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ListSheetsByFavouriteInstrument</servlet-name>
+        <servlet-class>servlets.ListSheetsByFavouriteInstrument</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ListSheetsByUser</servlet-name>
+        <servlet-class>servlets.ListSheetsByUser</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>NewUser</servlet-name>
         <url-pattern>/NewUser</url-pattern>
@@ -24,12 +40,28 @@
         <servlet-name>Login</servlet-name>
         <url-pattern>/Login</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ListAllSheets</servlet-name>
+        <url-pattern>/ListAllSheets</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Logout</servlet-name>
+        <url-pattern>/Logout</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ListSheetsByFavouriteInstrument</servlet-name>
+        <url-pattern>/ListSheetsByFavouriteInstrument</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ListSheetsByUser</servlet-name>
+        <url-pattern>/ListSheetsByUser</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>index.html</welcome-file>
+        <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
 </web-app>
