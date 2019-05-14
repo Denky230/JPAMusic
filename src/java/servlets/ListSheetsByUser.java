@@ -37,7 +37,7 @@ public class ListSheetsByUser extends HttpServlet {
         
         // Select Sheets by User from database
         String username = (String) request.getParameter("username");
-        User u = ejb.getUserbyUsername(username);
+        User u = ejb.selectUserbyUsername(username);
         List<Sheetmusic> sheets = ejb.selectSheetsByUser(u);
         
         // Add Sheets + send to listSheets.jsp for display

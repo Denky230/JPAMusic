@@ -27,19 +27,16 @@ public class EJBMusic {
     EntityManagerFactory emf;
 
     public void validateLogin(String username, String password) throws DatabaseException {
-        User user = getUserbyUsername(username);
+        User user = selectUserbyUsername(username);
         if (user == null || !password.equals(user.getPassword())) {
             throw new DatabaseException(DatabaseException.Errors.INVALID_LOGIN.ordinal());
         }
-    }
-    public User getUserbyUsername(String username) {
-        return emf.createEntityManager().find(User.class, username);
     }
     public void insertUser(User u) throws DatabaseException {
         EntityManager em = emf.createEntityManager();
 
         // Make sure User doesn't exist
-        User exist = getUserbyUsername(u.getUsername());
+        User exist = selectUserbyUsername(u.getUsername());
         if (exist != null) {
             throw new DatabaseException(DatabaseException.Errors.USER_DUPLICATED.ordinal(), u.getUsername());
         }
@@ -62,6 +59,9 @@ public class EJBMusic {
         em.persist(u);
         em.close();
     }
+    public User selectUserbyUsername(String username) {
+        return emf.createEntityManager().find(User.class, username);
+    }
 
     public void insertSheet(Sheetmusic s) {
         EntityManager em = emf.createEntityManager();
@@ -83,6 +83,22 @@ public class EJBMusic {
         
         em.persist(s);
         em.close();
+    }
+    public void updateSheet(Sheetmusic s) {
+        emf.createEntityManager().merge(s);
+    }
+    public void deleteSheet(Sheetmusic s) {
+        EntityManager em = emf.createEntityManager();
+        
+        // Make sure Sheet is ready to be removed
+        if (!em.contains(s)) {
+            s = em.merge(s);
+        }
+        
+        em.remove(s);
+    }
+    public Sheetmusic selectSheetByID(int id) {
+        return emf.createEntityManager().find(Sheetmusic.class, id);
     }
     public List<Sheetmusic> selectAllSheets() {
         return emf.createEntityManager().createNamedQuery("Sheetmusic.findAll").getResultList();

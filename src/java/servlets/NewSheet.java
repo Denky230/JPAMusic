@@ -40,8 +40,8 @@ public class NewSheet extends HttpServlet {
         String instrument = request.getParameter("instrument");
         String genre = request.getParameter("genre");
         String difficulty = request.getParameter("difficulty");
-        User u = (User) request.getSession().getAttribute("user");
-        Sheetmusic s = new Sheetmusic(null, title, artist, instrument, genre, difficulty, false, u);
+        User owner = (User) request.getSession().getAttribute("user");
+        Sheetmusic s = new Sheetmusic(null, title, artist, instrument, genre, difficulty, false, owner);
         
         // Register new Sheet
         ejb.insertSheet(s);

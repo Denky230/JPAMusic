@@ -25,7 +25,7 @@
         %>
         
         <!-- Main -->
-        <div style="width:20%; padding-top: 20px; padding-left: 30px">
+        <div style="padding-top: 20px; padding-left: 30px">
 
             <h1>Home</h1>
             
@@ -51,19 +51,21 @@
             </form>            
             
             <!-- List Sheets By User -->
-            <form action="ListSheetsByUser">
-                <div class="form-group">
-                    <input style="width:50%;" type="text" class="form-control" name="username" placeholder="Username" required>
-                    <button type="submit" class="btn btn-primary">List Sheets By User</button>
+            <form class="form-inline" action="ListSheetsByUser">
+                <button type="submit" class="btn btn-primary">List Sheets By User</button>
+                <div class="form-group row mx-sm-3">
+                    <input type="text" class="form-control" name="username" placeholder="Username" required>
                 </div>
             </form>
             
             <!-- Logout -->
-            <form action="Logout">
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary">Logout</button>
-                </div>
-            </form>
+            <p>
+                <form action="Logout">
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Logout</button>
+                    </div>
+                </form>
+            </p>
             
         </div>
 

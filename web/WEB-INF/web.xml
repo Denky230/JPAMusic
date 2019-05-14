@@ -28,6 +28,14 @@
         <servlet-name>ListSheetsByUser</servlet-name>
         <servlet-class>servlets.ListSheetsByUser</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>DeleteSheet</servlet-name>
+        <servlet-class>servlets.DeleteSheet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateSheet</servlet-name>
+        <servlet-class>servlets.UpdateSheet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>NewUser</servlet-name>
         <url-pattern>/NewUser</url-pattern>
@@ -55,6 +63,14 @@
     <servlet-mapping>
         <servlet-name>ListSheetsByUser</servlet-name>
         <url-pattern>/ListSheetsByUser</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteSheet</servlet-name>
+        <url-pattern>/DeleteSheet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateSheet</servlet-name>
+        <url-pattern>/UpdateSheet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

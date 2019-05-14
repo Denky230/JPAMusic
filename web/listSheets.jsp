@@ -56,6 +56,16 @@
                                 <td><%= s.getDifficulty() %></td>
                                 <td><%= s.getPrinted() ? "Y" : "N" %></td>
                                 <td><%= s.getOwner().getUsername() %></td>
+                                <td>
+                                    <form action="UpdateSheet">
+                                        <button type="submit" class="btn btn-primary" name="edit" value="<%= s.getIdsheetmusic() %>">Edit</button>
+                                    </form>
+                                </td>
+                                <td>
+                                    <form action="DeleteSheet">
+                                        <button type="submit" class="btn btn-primary" name="delete" value="<%= s.getIdsheetmusic() %>">X</button>
+                                    </form>
+                                </td>
                             </tr><% 
                         }
                     %>

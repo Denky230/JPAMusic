@@ -5,8 +5,7 @@
  */
 package servlets;
 
-import entities.User;
-import exceptions.DatabaseException;
+import entities.Sheetmusic;
 import java.io.IOException;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -17,12 +16,12 @@ import persistence.EJBMusic;
 
 /**
  *
- * @author alu2017310
+ * @author User
  */
-public class Login extends HttpServlet {
+public class DeleteSheet extends HttpServlet {
 
      @EJB EJBMusic ejb;
-
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      *
@@ -33,26 +32,17 @@ public class Login extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        // Get User data from login form
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-
-        try {
-            // Validate credentials
-            ejb.validateLogin(username, password);
-
-            // Login User
-            User user = ejb.selectUserbyUsername(username);
-            request.getSession(true).setAttribute("user", user);
-
-        } catch (DatabaseException e) {
-            // Add error + send to feedback.jsp for display
-            request.setAttribute("status", e.getMessage());
-            request.getRequestDispatcher("/feedback.jsp").forward(request, response);
-        }
         
-        request.getRequestDispatcher("/home.jsp").forward(request, response);
+        // Get Sheet to delete
+        int sheetToDeleteId = Integer.valueOf(request.getParameter("delete"));
+        Sheetmusic sheet = ejb.selectSheetByID(sheetToDeleteId);
+
+        // Delete Sheet from database
+        ejb.deleteSheet(sheet);
+        
+        // Give User feedback
+        request.setAttribute("status", "Sheet removed successfully");
+        request.getRequestDispatcher("/feedback.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

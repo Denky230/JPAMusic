@@ -33,12 +33,15 @@
             <!-- Sheet register form -->
             <form action="NewSheet" method="POST">
 
+                <!-- Title -->
                 <div class="form-group">
                     <input type="text" class="form-control" name="title" placeholder="Title">
                 </div>
+                <!-- Artist -->
                 <div class="form-group">
                     <input type="text" class="form-control" name="artist" placeholder="Artist">
                 </div>
+                <!-- Instrument -->
                 <div class="form-group">
                     <select name="instrument">
                         <%
@@ -48,6 +51,7 @@
                         %>
                     </select>
                 </div>
+                <!-- Genre -->
                 <div class="form-group">
                     <select name="genre">
                         <%
@@ -57,6 +61,7 @@
                         %>
                     </select>
                 </div>
+                <!-- Difficulty -->
                 <div class="form-group">
                     <select name="difficulty">
                         <%

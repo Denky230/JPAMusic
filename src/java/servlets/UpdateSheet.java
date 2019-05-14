@@ -5,8 +5,8 @@
  */
 package servlets;
 
+import entities.Sheetmusic;
 import entities.User;
-import exceptions.DatabaseException;
 import java.io.IOException;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -17,12 +17,12 @@ import persistence.EJBMusic;
 
 /**
  *
- * @author alu2017310
+ * @author User
  */
-public class Login extends HttpServlet {
+public class UpdateSheet extends HttpServlet {
 
      @EJB EJBMusic ejb;
-
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      *
@@ -33,26 +33,38 @@ public class Login extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        // Get User data from login form
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-
-        try {
-            // Validate credentials
-            ejb.validateLogin(username, password);
-
-            // Login User
-            User user = ejb.selectUserbyUsername(username);
-            request.getSession(true).setAttribute("user", user);
-
-        } catch (DatabaseException e) {
-            // Add error + send to feedback.jsp for display
-            request.setAttribute("status", e.getMessage());
-            request.getRequestDispatcher("/feedback.jsp").forward(request, response);
-        }
         
-        request.getRequestDispatcher("/home.jsp").forward(request, response);
+        // Check if Sheet was edited or needs editing
+        if ((request.getParameter("save")) != null) {
+            
+            // Get Sheet data from editing form
+            int id = Integer.parseInt(request.getParameter("id"));
+            String title = request.getParameter("title");
+            String artist = request.getParameter("artist");
+            boolean printed = request.getParameter("printed") != null;
+            String instrument = request.getParameter("instrument");
+            String genre = request.getParameter("genre");
+            String difficulty = request.getParameter("difficulty");
+            User owner = (User) request.getSession().getAttribute("user");
+            Sheetmusic sheet = new Sheetmusic(id, title, artist, instrument, genre, difficulty, printed, owner);
+            
+            // Update Sheet in database
+            ejb.updateSheet(sheet);
+            
+            // Give User feedback
+            request.setAttribute("status", "Sheet successfully edited");
+            request.getRequestDispatcher("/feedback.jsp").forward(request, response);
+            
+        } else {
+            
+            // Get Sheet to edit
+            int sheetToEditId = Integer.valueOf(request.getParameter("edit"));
+            Sheetmusic sheet = ejb.selectSheetByID(sheetToEditId);
+
+            // Present with Sheet editing screen
+            request.setAttribute("sheet", sheet);
+            request.getRequestDispatcher("/editSheet.jsp").forward(request, response);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

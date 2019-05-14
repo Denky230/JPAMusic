@@ -25,12 +25,15 @@
             <!-- User register form -->
             <form action="NewUser" method="POST">
 
+                <!-- Username -->
                 <div class="form-group">
                     <input type="text" class="form-control" name="username" placeholder="Username">
                 </div>
+                <!-- Password -->
                 <div class="form-group">
                     <input type="text" class="form-control" name="password" placeholder="Password">
                 </div>
+                <!-- Instrument -->
                 <div class="form-group">
                     <select name="instrument">
                         <%
